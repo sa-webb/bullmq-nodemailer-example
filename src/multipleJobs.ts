@@ -8,7 +8,7 @@ async function addJobs() {
 }
 
 async function aJ() {
-  addJobs();
+  await addJobs();
 }
 
 aJ();
