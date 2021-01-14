@@ -1,10 +1,12 @@
 import { Job, QueueEvents } from "bullmq";
+import { messegeQueue } from "../config";
 import connection from "../connection";
 
 import { useWorker as worker } from "../worker";
 
 worker.on("completed", (job: Job) => {
   console.log("completed with data:", job.data);
+  messegeQueue.add("messageTest", job.data);
 });
 
 worker.on("progress", (job: Job) => {
