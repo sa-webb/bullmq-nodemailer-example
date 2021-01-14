@@ -1,6 +1,5 @@
-import { Queue } from 'bullmq';
-import IORedis from 'ioredis';
+import { Queue } from "bullmq";
 
-export const connection = new IORedis();
+import connection from "../connection";
 
-export const sendMailQueue = new Queue('Hermes', { connection });
+export const sendMailQueue = new Queue("worker1", { connection });
