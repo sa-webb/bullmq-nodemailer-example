@@ -25,3 +25,28 @@ export const useWorker = new Worker(
   },
   { connection: connection.duplicate() }
 );
+
+export const messageWorker = new Worker(
+  "worker2",
+  async (job: Job) => {
+    switch (job.name) {
+      case "messageTest":
+        mockJob(job.data);
+        break;
+      default:
+        throw new Error("Unknown Hermes type");
+    }
+  },
+  { connection: connection.duplicate() }
+);
+
+messageWorker.on("completed", (job: Job) => {
+  console.log("completed from worker 2", job.id);
+});
+messageWorker.on("progress", (job: Job, progress: number | object) => {
+  console.log("In Progess", job);
+});
+
+messageWorker.on("failed", (job: Job, failedReason: string) => {
+  console.log("job failed", job);
+});
